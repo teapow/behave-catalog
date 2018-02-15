@@ -19,8 +19,22 @@ environment = Environment(
     autoescape=select_autoescape(["html", "htm", "xml"])
 )
 
-DIRECTORY = "/home/thomas/Desktop/catalog"
+DIRECTORY = "/Users/thomas/Desktop/catalog"
 PATH = os.path.dirname(__file__)
+
+# Keys
+PHRASE = "phrase"
+DOCSTRING = "docstring"
+SOURCE = "source"
+FILE = "file"
+LINE = "line"
+FUNC = "func"
+
+# Step types
+GIVEN = "given"
+WHEN = "when"
+THEN = "then"
+STEP = "step"
 
 
 def run(config):
@@ -39,16 +53,17 @@ def run(config):
     static_files = [
         "bootstrap.min.css",
         "bootstrap.min.js",
+        "index.css",
         "index.html",
         "index.js",
         "jquery.min.js",
         "popper.min.js",
     ]
 
-    for file in static_files:
+    for static_file in static_files:
         shutil.copyfile(
-            src=os.path.join(PATH, "static", file),
-            dst=os.path.join(DIRECTORY, file),
+            src=os.path.join(PATH, "static", static_file),
+            dst=os.path.join(DIRECTORY, static_file),
         )
 
     with open(os.path.join(DIRECTORY, "index.html"), "wb") as index_file:
@@ -59,9 +74,9 @@ def run(config):
 
 def get_context(steps):
     context = OrderedDict()
-    for group in ["given", "when", "then", "step"]:
+    for group in [GIVEN, WHEN, THEN, STEP]:
         step_list = format_steps(steps.get(group))
-        context[group] = sorted(step_list, key=lambda x: x["phrase"])
+        context[group] = sorted(step_list, key=lambda x: x[PHRASE])
 
     return context
 
@@ -72,12 +87,12 @@ def format_steps(steps):
 
 def get_step(step):
     return {
-        "phrase": step.string,
-        "docstring": inspect.getdoc(step.func),
-        "source": {
-            "file": inspect.getsourcefile(step.func),
-            "line": inspect.getsourcelines(step.func)[1],
-            "func": step.func.__name__,
+        PHRASE: step.string,
+        DOCSTRING: inspect.getdoc(step.func),
+        SOURCE: {
+            FILE: inspect.getsourcefile(step.func),
+            LINE: inspect.getsourcelines(step.func)[1],
+            FUNC: step.func.__name__,
         },
     }
 

@@ -25,7 +25,6 @@ setup(
     install_requires=[
         'behave',
         'jinja2',
-        'shutil',
     ],
     entry_points={
         'console_scripts': [

@@ -2,33 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>Behave Catalog</title>
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>Behave Catalog</h1>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-md-2 mr-0" href="#">🥒 Behave Catalog</a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+</nav>
 
-    {% for group in steps %}
-        {% if steps[group] %}
-            <section>
-                <h2>{{ group|title }}</h2>
-                <ul>
-                    {% for step in steps[group] %}
-                        <li>{{ step.phrase }}</li>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    {% for group in steps %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#{{ group }}">
+                                <span class="badge float-right {% if steps[group]|count == 0 %}badge-secondary{% else %}badge-success{% endif %}" style="margin-top: 3px">{{ steps[group]|count }}</span>
+                                {{ group|title }}
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
-            </section>
-        {% endif %}
-    {% endfor %}
+            </div>
+        </nav>
 
-    <!-- Bootstrap JS -->
-    <script src="jquery.min.js"></script>
-    <script src="popper.min.js"></script>
-    <script src="bootstrap.min.js"></script>
+        <main id="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-    <!-- Custom JS -->
-    <script type="text/javascript" src="index.js"></script>
+            {% for group in steps %}
+                <div id="{{ group }}" class="card" style="margin-bottom: 2em;">
+                    <h5 class="card-header">{{ group|title }}</h5>
+
+                    <ul class="list-group list-group-flush">
+                        {% if steps[group] %}
+                            {% for step in steps[group] %}
+                                <li class="list-group-item">
+                                    <a data-toggle="collapse" href="#{{ group }}-{{ loop.index0 }}" aria-expanded="false" aria-controls="{{ group }}-{{ loop.index0 }}">
+                                        {{ step.phrase|safe }}
+                                    </a>
+                                    <div id="{{ group }}-{{ loop.index0 }}" class="collapse" data-parent="#main">
+                                        <h6 style="padding-top: 14px;">Usage</h6>
+                                        {% if not step.docstring %}
+                                            <span>Sed ac sapien leo. Aliquam eget quam at ex scelerisque convallis at non massa. In velit enim, faucibus ut leo nec, volutpat posuere dolor. Suspendisse dignissim leo et turpis lobortis, non tempus lectus tincidunt. Nulla ex nunc, consequat non efficitur ut, facilisis sit amet dolor. Etiam convallis ex at ligula euismod, vitae feugiat libero auctor. Curabitur venenatis ex eu lacus consequat semper. Fusce volutpat mi in placerat pellentesque. Nunc consequat massa quis turpis ornare, eget viverra ante placerat. Duis consequat, dui eget imperdiet porta, lectus tortor dictum orci, ac feugiat arcu arcu vitae tortor.</span>
+                                        {% else %}
+                                            <span class="text-muted">No docstring supplied.</span>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="list-group-item text-muted">No steps found.</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </main>
+    </div>
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="popper.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
