@@ -54,9 +54,9 @@
                                     <code class="float-right d-none d-lg-block d-xl-block pl-1" data-toggle="tooltip" data-html="true" data-placement="left" title="{{ step.source.file }}:{{ step.source.line }}">{{ step.source.func }}()</code>
 
                                     <div id="{{ group }}-{{ loop.index0 }}" class="collapse" data-parent="#main">
-                                        <h6 class="pt-3">Usage</h6>
-                                        {% if not step.docstring %}
-                                            <span>Sed ac sapien leo. Aliquam eget quam at ex scelerisque convallis at non massa. In velit enim, faucibus ut leo nec, volutpat posuere dolor. Suspendisse dignissim leo et turpis lobortis, non tempus lectus tincidunt. Nulla ex nunc, consequat non efficitur ut, facilisis sit amet dolor. Etiam convallis ex at ligula euismod, vitae feugiat libero auctor. Curabitur venenatis ex eu lacus consequat semper. Fusce volutpat mi in placerat pellentesque. Nunc consequat massa quis turpis ornare, eget viverra ante placerat. Duis consequat, dui eget imperdiet porta, lectus tortor dictum orci, ac feugiat arcu arcu vitae tortor.</span>
+                                        <h6 class="pt-3">Documentation</h6>
+                                        {% if step.docstring %}
+                                            <pre>{{ step.docstring }}</pre>
                                         {% else %}
                                             <span class="text-muted">No docstring supplied.</span>
                                         {% endif %}
@@ -69,6 +69,10 @@
                     </ul>
                 </div>
             {% endfor %}
+
+            <footer>
+                <p class="text-muted float-right">Generated: {{ timestamp.strftime("%Y-%m-%d @ %H:%M:%S") }}</p>
+            </footer>
         </main>
     </div>
 </div>
