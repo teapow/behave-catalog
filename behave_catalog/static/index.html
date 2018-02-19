@@ -11,8 +11,8 @@
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-md-2 mr-0" href="#">🥒 Behave Catalog</a>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <a class="navbar-brand col-md-2 mr-0" href="#">Behave Catalog</a>
+    <input id="search" class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 </nav>
 
 <div class="container-fluid">
@@ -23,7 +23,13 @@
                     {% for group in steps %}
                         <li class="nav-item">
                             <a class="nav-link" href="#{{ group }}">
-                                <span class="badge float-right {% if steps[group]|count == 0 %}badge-secondary{% else %}badge-success{% endif %}" style="margin-top: 3px">{{ steps[group]|count }}</span>
+                                {% if steps[group]|count == 0 %}
+                                    <span class="badge float-right mt-1 badge-secondary">
+                                {% else %}
+                                    <span class="badge float-right mt-1 badge-success">
+                                {% endif %}
+                                        {{ steps[group]|count }}
+                                    </span>
                                 {{ group|title }}
                             </a>
                         </li>
@@ -32,10 +38,9 @@
             </div>
         </nav>
 
-        <main id="main" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
+        <main id="main" role="main" class="col-md-10 ml-sm-auto col-lg-10 pt-3 px-4">
             {% for group in steps %}
-                <div id="{{ group }}" class="card" style="margin-bottom: 2em;">
+                <div id="{{ group }}" class="card mb-4">
                     <h5 class="card-header">{{ group|title }}</h5>
 
                     <ul class="list-group list-group-flush">
@@ -45,8 +50,11 @@
                                     <a data-toggle="collapse" href="#{{ group }}-{{ loop.index0 }}" aria-expanded="false" aria-controls="{{ group }}-{{ loop.index0 }}">
                                         {{ step.phrase|safe }}
                                     </a>
+
+                                    <code class="float-right d-none d-lg-block d-xl-block pl-1" data-toggle="tooltip" data-html="true" data-placement="left" title="{{ step.source.file }}:{{ step.source.line }}">{{ step.source.func }}()</code>
+
                                     <div id="{{ group }}-{{ loop.index0 }}" class="collapse" data-parent="#main">
-                                        <h6 style="padding-top: 14px;">Usage</h6>
+                                        <h6 class="pt-3">Usage</h6>
                                         {% if not step.docstring %}
                                             <span>Sed ac sapien leo. Aliquam eget quam at ex scelerisque convallis at non massa. In velit enim, faucibus ut leo nec, volutpat posuere dolor. Suspendisse dignissim leo et turpis lobortis, non tempus lectus tincidunt. Nulla ex nunc, consequat non efficitur ut, facilisis sit amet dolor. Etiam convallis ex at ligula euismod, vitae feugiat libero auctor. Curabitur venenatis ex eu lacus consequat semper. Fusce volutpat mi in placerat pellentesque. Nunc consequat massa quis turpis ornare, eget viverra ante placerat. Duis consequat, dui eget imperdiet porta, lectus tortor dictum orci, ac feugiat arcu arcu vitae tortor.</span>
                                         {% else %}
@@ -66,6 +74,7 @@
 </div>
 
 <script src="jquery.min.js"></script>
+<script src="jquery.debounce.min.js"></script>
 <script src="popper.min.js"></script>
 <script src="bootstrap.min.js"></script>
 <script src="index.js"></script>

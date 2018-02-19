@@ -56,6 +56,7 @@ def run(config):
         "index.css",
         "index.html",
         "index.js",
+        "jquery.debounce.min.js",
         "jquery.min.js",
         "popper.min.js",
     ]
