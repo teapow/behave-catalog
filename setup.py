@@ -13,7 +13,7 @@ setup(
     version='0.1',
     packages=find_packages(),
     include_package_data=True,
-    license='BSD License',
+    license='MIT',
     description='Generate a searchable HTML page listing steps available '
                 'to use within .feature files, along with corresponding '
                 'function docstrings.',
