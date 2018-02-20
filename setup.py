@@ -28,7 +28,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'behave-catalog=behave_catalog.cli:main',
+            'behave-catalog=behave_catalog.__main__:main',
         ],
     }
 

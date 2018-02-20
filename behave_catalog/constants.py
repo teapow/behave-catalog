@@ -34,4 +34,5 @@ STATIC_FILES = [
     "popper.min.js",
 ]
 
+DEFAULT_DIR = "behave-catalog"
 INDEX_FILE = "index.html"

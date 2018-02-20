@@ -9,16 +9,18 @@ from datetime import datetime
 from . import constants as const
 
 
-def get_context(steps):
+def get_template_context(steps):
+    """Return a dict containing the context to be passed to the template."""
     return {
-        "steps": get_context_steps(steps),
+        "steps": get_steps_context(steps),
         "timestamp": datetime.now(),
     }
 
 
-def get_context_steps(steps):
+def get_steps_context(steps):
     """Return sorted lists of steps, grouped by the step type."""
     context = OrderedDict()
+
     for group in const.STEP_TYPES:
         step_list = format_steps(steps.get(group))
         context[group] = sorted(step_list, key=lambda x: x[const.PHRASE])
@@ -27,10 +29,12 @@ def get_context_steps(steps):
 
 
 def format_steps(steps):
-    return [get_step(step) for step in steps]
+    """Return a list of formatted steps."""
+    return [format_step(step) for step in steps]
 
 
-def get_step(step):
+def format_step(step):
+    """Given a step, extract key information and return a formatted dict."""
     return {
         const.PHRASE: step.string,
         const.DOCSTRING: inspect.getdoc(step.func),
