@@ -19,22 +19,38 @@ parser = argparse.ArgumentParser(
                 'discovered by behave.')
 
 parser.add_argument(
-    'path', type=str, nargs='?', default=default_dir,
+    '--path',
+    '-p',
+    type=str,
+    nargs='?',
+    default=default_dir,
     help='Path to the directory where the generated report will be placed. '
          'Defaults to: {dir}.'.format(dir=default_dir),
+)
+
+parser.add_argument(
+    '--command-args',
+    '-b',
+    type=str,
+    nargs='?',
+    default='',
+    dest='command_args',
+    help='Arguments to pass through to the underlying behave runner, as '
+         'a quoted string.',
 )
 
 
 def main():
     """Entry point."""
-    path = parser.parse_args().path
-
-    config = Configuration(command_args={})
+    args = parser.parse_args()
+    config = Configuration(args.command_args)
     runner = Runner(config)
-    runner.setup_paths()
-    runner.load_step_definitions()
 
-    exit_code = run(steps=step_registry.registry.steps, output_to=path)
+    with runner.path_manager:
+        runner.setup_paths()
+        runner.load_step_definitions()  # This populates the step_registry.
+
+    exit_code = run(steps=step_registry.registry.steps, output_to=args.path)
     return sys.exit(exit_code)
 
 
