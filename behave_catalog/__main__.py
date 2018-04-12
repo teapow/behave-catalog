@@ -30,7 +30,7 @@ parser.add_argument(
 
 parser.add_argument(
     '--command-args',
-    '-b',
+    '-c',
     type=str,
     nargs='?',
     default='',
