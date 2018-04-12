@@ -40,6 +40,8 @@ You could automatically generate this document as part of your build-pipeline, a
 Quickstart
 ==========
 
+``behave-catalog`` works as a wrapper around ``behave``. It should be run from the same directory from which you'd usually run ``behave``.
+
 .. code-block::
 
     $ pip install behave-catalog
