@@ -4,21 +4,21 @@ $(document).ready(function() {
     });
 
     $("#search").on("input", $.debounce(150, function() {
-        var search_term = this.value.toLowerCase();
+        var searchTerm = this.value.toLowerCase();
         var steps = $(".list-group-item");
 
-        if (search_term === "") {
+        if (searchTerm === "") {
             steps.show();
         } else {
-            var matching_steps = steps.filter(function(index) {
+            var matchingSteps = steps.filter(function(index) {
                 var step = $(steps[index]);
-                var step_text = $.trim(step.find("a").first().text()).toLowerCase();
+                var stepText = $.trim(step.find("a").first().text()).toLowerCase();
 
-                return step_text && step_text.indexOf(search_term) >= 0;
+                return stepText && stepText.indexOf(searchTerm) >= 0;
             });
 
             steps.hide();
-            matching_steps.show();
+            matchingSteps.show();
         }
     }));
 
