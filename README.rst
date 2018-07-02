@@ -32,6 +32,8 @@ Alternate solutions
 Introducing behave-catalog
 --------------------------
 
+.. image:: https://i.imgur.com/wnaA4o0.png
+
 `behave-catalog`_ solves this problem by generating a single, searchable HTML document that shows all step definitions, along with how to use them, grouped by `GIVEN`, `WHEN`, `THEN` (and `STEP`).
 
 You could automatically generate this document as part of your build-pipeline, and host it to make easily accessible, and crucially, always up-to-date.
